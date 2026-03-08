@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "version": "1.0.0",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "downloads",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://api.github.com/*",
+    "*://raw.githubusercontent.com/*",
+    "*://github.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "__MSG_extensionActionTitle__"
+  }
+}

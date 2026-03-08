@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <div id="header">
+      <div class="tabs">
+        <button id="tabCurrent" class="tab active" data-i18n="tabCurrent">Current Repo</button>
+        <button id="tabHistory" class="tab" data-i18n="tabHistory">All History</button>
+      </div>
+      <div class="header-actions">
+        <button id="settingsBtn" title="Settings" data-i18n-title="settingsBtnTitle">⚙️</button>
+      </div>
+    </div>
+
+    <div id="mainView">
+      <div id="tokenWarning" style="display: none; background: #fff3cd; color: #856404; padding: 10px; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ffeeba; font-size: 11px; text-align: center;">
+        <span data-i18n="noTokenWarning">No GitHub Token. </span><a href="#" id="linkToSettings" style="color: #005cc5; font-weight: bold; text-decoration: none;" data-i18n="addTokenLink">Add a token</a><span data-i18n="toPreventLimits"> to prevent API limits.</span>
+      </div>
+      <div id="status" data-i18n="loading">Loading...</div>
+      <ul id="skillsList"></ul>
+    </div>
+
+    <div id="historyView" style="display: none;">
+      <input type="text" id="searchInput" placeholder="Search skills or repos..." data-i18n-placeholder="searchPlaceholder">
+      <ul id="historyList"></ul>
+    </div>
+
+    <div id="settingsView" style="display: none;">
+      <h3 data-i18n="settingsTitle">Settings</h3>
+      
+      <div class="setting-item">
+        <label><span data-i18n="languageLabel">Language</span>:</label>
+        <select id="langSelect">
+          <option value="system" data-i18n="langSystem">System Default</option>
+          <option value="en">English</option>
+          <option value="zh_CN">简体中文</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="autoDetectCheck"> 
+          <span data-i18n="autoDetectLabel">Auto-detect skills on GitHub pages</span>
+        </label>
+      </div>
+      
+      <div class="setting-item">
+        <label><span data-i18n="githubTokenLabel">GitHub Token (</span><a href="https://github.com/settings/tokens/new?description=Skills+Download+Extension" target="_blank" style="color:#0366d6;" data-i18n="getOneHere">Get one here</a><span data-i18n="githubTokenSuffix">):</span></label>
+        <input type="password" id="tokenInput" placeholder="ghp_...">
+        <button id="saveTokenBtn" data-i18n="saveSettingsBtn">Save Settings</button>
+      </div>
+
+      <button id="backBtn" data-i18n="backBtn">Back to Scanner</button>
+    </div>
+  </div>
+
+  <script src="libs/jszip.min.js"></script>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

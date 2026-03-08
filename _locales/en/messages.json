@@ -1,0 +1,125 @@
+{
+  "extensionName": {
+    "message": "Skills Download Extension"
+  },
+  "extensionDescription": {
+    "message": "Discover and download AI Agent Skills from GitHub repositories."
+  },
+  "extensionActionTitle": {
+    "message": "Download Skills"
+  },
+  "appTitle": {
+    "message": "Skills Downloader"
+  },
+  "historyBtnTitle": {
+    "message": "History"
+  },
+  "settingsBtnTitle": {
+    "message": "Settings"
+  },
+  "noTokenWarning": {
+    "message": "No GitHub Token. "
+  },
+  "addTokenLink": {
+    "message": "Add a token"
+  },
+  "toPreventLimits": {
+    "message": " to prevent API limits."
+  },
+  "loading": {
+    "message": "Loading..."
+  },
+  "searchPlaceholder": {
+    "message": "Search skills or repos..."
+  },
+  "settingsTitle": {
+    "message": "Settings"
+  },
+  "autoDetectLabel": {
+    "message": "Auto-detect skills on GitHub pages"
+  },
+  "githubTokenLabel": {
+    "message": "GitHub Token ("
+  },
+  "getOneHere": {
+    "message": "Get one here"
+  },
+  "githubTokenSuffix": {
+    "message": "):"
+  },
+  "saveSettingsBtn": {
+    "message": "Save Settings"
+  },
+  "backBtn": {
+    "message": "Back to Scanner"
+  },
+  "detectingRepo": {
+    "message": "Detecting GitHub repo..."
+  },
+  "cannotReadUrl": {
+    "message": "Cannot read tab URL."
+  },
+  "notGithubRepo": {
+    "message": "Not a GitHub repository page."
+  },
+  "fetchingTree": {
+    "message": "Fetching repository tree..."
+  },
+  "errorCommBg": {
+    "message": "Error communicating with background script."
+  },
+  "noSkillsFound": {
+    "message": "No skills found (no SKILL.md files)."
+  },
+  "updatedBadge": {
+    "message": "Updated"
+  },
+  "downloadBtn": {
+    "message": "Download"
+  },
+  "loadingHistory": {
+    "message": "Loading history..."
+  },
+  "errorLoadingHistory": {
+    "message": "Error loading history."
+  },
+  "noSkillsInHistory": {
+    "message": "No skills in history."
+  },
+  "updatedPrefix": {
+    "message": "Updated: "
+  },
+  "fetchingBtn": {
+    "message": "Fetching..."
+  },
+  "failedToFetchTree": {
+    "message": "Failed to fetch repository tree for download."
+  },
+  "zippingBtn": {
+    "message": "Zipping..."
+  },
+  "downloadFailed": {
+    "message": "Download failed: "
+  },
+  "settingsSaved": {
+    "message": "Settings saved!"
+  },
+  "copyCommandBtn": {
+    "message": "Copy npx command"
+  },
+  "copiedState": {
+    "message": "Copied!"
+  },
+  "tabCurrent": {
+    "message": "Current Repo"
+  },
+  "tabHistory": {
+    "message": "All History"
+  },
+  "languageLabel": {
+    "message": "Language"
+  },
+  "langSystem": {
+    "message": "System Default"
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "extensionName": {
+    "message": "Skills 下载扩展"
+  },
+  "extensionDescription": {
+    "message": "发现并下载来自 GitHub 仓库的 AI 代理 Skills。"
+  },
+  "extensionActionTitle": {
+    "message": "下载 Skills"
+  },
+  "appTitle": {
+    "message": "Skills 下载器"
+  },
+  "historyBtnTitle": {
+    "message": "历史记录"
+  },
+  "settingsBtnTitle": {
+    "message": "设置"
+  },
+  "noTokenWarning": {
+    "message": "未设置 GitHub Token。"
+  },
+  "addTokenLink": {
+    "message": "添加 Token"
+  },
+  "toPreventLimits": {
+    "message": " 以防止 API 速率受限。"
+  },
+  "loading": {
+    "message": "加载中..."
+  },
+  "searchPlaceholder": {
+    "message": "搜索 skills 或仓库..."
+  },
+  "settingsTitle": {
+    "message": "设置"
+  },
+  "autoDetectLabel": {
+    "message": "在 GitHub 页面自动探测 skills"
+  },
+  "githubTokenLabel": {
+    "message": "GitHub Token ("
+  },
+  "getOneHere": {
+    "message": "在此获取"
+  },
+  "githubTokenSuffix": {
+    "message": "):"
+  },
+  "saveSettingsBtn": {
+    "message": "保存设置"
+  },
+  "backBtn": {
+    "message": "返回扫描器"
+  },
+  "detectingRepo": {
+    "message": "正在检测 GitHub 仓库..."
+  },
+  "cannotReadUrl": {
+    "message": "无法读取标签页 URL。"
+  },
+  "notGithubRepo": {
+    "message": "这不是一个 GitHub 仓库页面。"
+  },
+  "fetchingTree": {
+    "message": "正在获取仓库文件树..."
+  },
+  "errorCommBg": {
+    "message": "与后台脚本通信出错。"
+  },
+  "noSkillsFound": {
+    "message": "未找到 skills (没有 SKILL.md 文件)。"
+  },
+  "updatedBadge": {
+    "message": "已更新"
+  },
+  "downloadBtn": {
+    "message": "下载"
+  },
+  "loadingHistory": {
+    "message": "正在加载历史记录..."
+  },
+  "errorLoadingHistory": {
+    "message": "加载历史记录出错。"
+  },
+  "noSkillsInHistory": {
+    "message": "历史记录中没有 skills。"
+  },
+  "updatedPrefix": {
+    "message": "更新于："
+  },
+  "fetchingBtn": {
+    "message": "正在获取..."
+  },
+  "failedToFetchTree": {
+    "message": "获取用于下载的仓库文件树失败。"
+  },
+  "zippingBtn": {
+    "message": "打包中..."
+  },
+  "downloadFailed": {
+    "message": "下载失败："
+  },
+  "settingsSaved": {
+    "message": "设置已保存！"
+  },
+  "copyCommandBtn": {
+    "message": "复制 npx 命令"
+  },
+  "copiedState": {
+    "message": "已复制！"
+  },
+  "tabCurrent": {
+    "message": "当前仓库"
+  },
+  "tabHistory": {
+    "message": "全部历史"
+  },
+  "languageLabel": {
+    "message": "语言"
+  },
+  "langSystem": {
+    "message": "系统默认"
+  }
+}
