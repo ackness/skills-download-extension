@@ -76,12 +76,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // --- Auto-Detect Logic ---
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   // GitHub uses soft navigation (Turbo/pjax), so we should check for URL changes
-  if (changeInfo.url) {
-    const urlPattern = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
-    const match = changeInfo.url.match(urlPattern);
+  // We can also trigger on status complete to catch initial page loads correctly
+  if (changeInfo.url || changeInfo.status === "complete") {
+    const currentUrl = changeInfo.url || tab.url;
+    if (!currentUrl) return;
 
-    // Clear badge if navigating away from a repo or to a different repo
-    chrome.action.setBadgeText({ text: "", tabId: tabId });
+    const urlPattern = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
+    const match = currentUrl.match(urlPattern);
 
     if (match) {
       const { autoDetect } = await chrome.storage.local.get("autoDetect");
@@ -89,9 +90,28 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
         const owner = match[1];
         const repo = match[2];
         const cleanRepo = repo.split('/')[0].split('?')[0].split('#')[0];
+        
+        // 1. Immediately show cached badge if exists
+        const cacheKey = `repo_${owner}_${cleanRepo}`;
+        const cacheData = await chrome.storage.local.get(cacheKey);
+        if (cacheData[cacheKey] && cacheData[cacheKey].skills) {
+           const count = cacheData[cacheKey].skills.length;
+           if (count > 0) {
+             const badgeText = count > 99 ? "99+" : count.toString();
+             chrome.action.setBadgeText({ text: badgeText, tabId: tabId });
+             chrome.action.setBadgeBackgroundColor({ color: "#0366d6", tabId: tabId });
+           }
+        } else {
+           chrome.action.setBadgeText({ text: "", tabId: tabId });
+        }
+
+        // 2. Fetch latest to update cache and badge if needed
         console.log(`Auto-detecting skills for ${owner}/${cleanRepo}...`);
         handleFetchSkills(owner, cleanRepo, tabId);
       }
+    } else {
+      // Clear badge if not a repo
+      chrome.action.setBadgeText({ text: "", tabId: tabId });
     }
   }
 });
