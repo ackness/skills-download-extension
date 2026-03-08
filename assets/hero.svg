@@ -1,0 +1,67 @@
+<svg width="800" height="320" viewBox="0 0 800 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with slight gradient -->
+  <rect width="800" height="320" rx="16" fill="url(#paint0_linear)"/>
+  
+  <!-- Left side: Large Icon -->
+  <g transform="translate(60, 60)">
+    <g filter="url(#drop_shadow)" transform="scale(1.5625)">
+      <rect width="128" height="128" rx="28" fill="#24292E"/>
+      <path d="M64 28V82M64 82L44 62M64 82L84 62" stroke="#2EA043" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M32 100H96" stroke="#58A6FF" stroke-width="12" stroke-linecap="round"/>
+      <path d="M96 36L100 24L112 20L100 16L96 4L92 16L80 20L92 24L96 36Z" fill="#F1E05A"/>
+      <path d="M36 32L38 26L44 24L38 22L36 16L34 22L28 24L34 26L36 32Z" fill="#F1E05A"/>
+    </g>
+  </g>
+
+  <!-- Right side: Typography -->
+  <g transform="translate(300, 85)">
+    <!-- Main Title -->
+    <text x="0" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="bold" fill="#FFFFFF">
+      AI Agent Skills
+    </text>
+    <text x="0" y="92" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="44" font-weight="bold" fill="#58A6FF">
+      Downloader
+    </text>
+    
+    <!-- Subtitle -->
+    <text x="0" y="136" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" fill="#8B949E" font-weight="500">
+      The essential Chrome Extension for GitHub Skills
+    </text>
+    
+    <!-- Badges -->
+    <g transform="translate(0, 166)">
+      <!-- Badge 1: Manifest V3 -->
+      <rect x="0" y="0" width="104" height="28" rx="14" fill="#2EA043" fill-opacity="0.15" stroke="#2EA043" stroke-width="1.5"/>
+      <text x="52" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#3FB950" text-anchor="middle">Manifest V3</text>
+      
+      <!-- Badge 2: i18n Ready -->
+      <rect x="116" y="0" width="94" height="28" rx="14" fill="#58A6FF" fill-opacity="0.15" stroke="#58A6FF" stroke-width="1.5"/>
+      <text x="163" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#79C0FF" text-anchor="middle">i18n Ready</text>
+      
+      <!-- Badge 3: Passive Cache -->
+      <rect x="222" y="0" width="130" height="28" rx="14" fill="#F2CC60" fill-opacity="0.15" stroke="#F2CC60" stroke-width="1.5"/>
+      <text x="287" y="19" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#F2CC60" text-anchor="middle">Passive Caching</text>
+    </g>
+  </g>
+
+  <!-- Definitions -->
+  <defs>
+    <!-- Deep space/dark mode gradient for background -->
+    <linearGradient id="paint0_linear" x1="0" y1="0" x2="800" y2="320" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D1117" />
+      <stop offset="1" stop-color="#161B22" />
+    </linearGradient>
+    
+    <!-- Soft shadow for the main icon block -->
+    <filter id="drop_shadow" x="-30" y="-30" width="188" height="188" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="8"/>
+      <feGaussianBlur stdDeviation="12"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+    </filter>
+  </defs>
+</svg>

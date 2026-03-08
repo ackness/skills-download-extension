@@ -1,5 +1,9 @@
 # AI Agent Skills Downloader (Chrome Extension)
 
+<p align="center">
+  <img src="assets/hero.svg" alt="AI Agent Skills Downloader Hero Image">
+</p>
+
 A Manifest V3 Chrome Extension that helps you discover, manage, and download AI Agent "Skills" (directories containing a `SKILL.md` file) directly from GitHub repositories.
 
 ## 🌟 Features
