@@ -99,6 +99,8 @@ li {
   display: flex;
   flex-direction: column;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  content-visibility: auto;
+  contain-intrinsic-size: 80px;
 }
 
 .skill-main {
