@@ -75,10 +75,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 // --- Auto-Detect Logic ---
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-  if (changeInfo.status === "complete" && tab.url) {
+  // GitHub uses soft navigation (Turbo/pjax), so we should check for URL changes
+  if (changeInfo.url) {
     const urlPattern = /^https:\/\/github\.com\/([^\/]+)\/([^\/]+)/;
-    const match = tab.url.match(urlPattern);
-    
+    const match = changeInfo.url.match(urlPattern);
+
+    // Clear badge if navigating away from a repo or to a different repo
+    chrome.action.setBadgeText({ text: "", tabId: tabId });
+
     if (match) {
       const { autoDetect } = await chrome.storage.local.get("autoDetect");
       if (autoDetect) {
@@ -91,7 +95,6 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     }
   }
 });
-
 
 // --- Core API Logic ---
 async function fetchTreeBySha(owner, repo, sha) {
