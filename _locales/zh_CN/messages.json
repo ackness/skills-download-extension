@@ -110,6 +110,18 @@
   "copiedState": {
     "message": "已复制！"
   },
+  "infoBtn": {
+    "message": "查看详情"
+  },
+  "loadingDetails": {
+    "message": "正在加载元数据..."
+  },
+  "noDescription": {
+    "message": "暂无描述。"
+  },
+  "errorParsingMeta": {
+    "message": "无法加载元数据。"
+  },
   "tabCurrent": {
     "message": "当前仓库"
   },

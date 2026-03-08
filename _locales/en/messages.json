@@ -110,6 +110,18 @@
   "copiedState": {
     "message": "Copied!"
   },
+  "infoBtn": {
+    "message": "View Details"
+  },
+  "loadingDetails": {
+    "message": "Loading metadata..."
+  },
+  "noDescription": {
+    "message": "No description available."
+  },
+  "errorParsingMeta": {
+    "message": "Failed to load metadata."
+  },
   "tabCurrent": {
     "message": "Current Repo"
   },

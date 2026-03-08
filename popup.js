@@ -234,30 +234,53 @@ document.addEventListener("DOMContentLoaded", async () => {
         const actionsDiv = document.createElement("div");
         actionsDiv.className = "skill-actions";
 
+        const infoBtn = document.createElement("button");
+        infoBtn.className = "icon-btn";
+        infoBtn.innerHTML = "ℹ️";
+        infoBtn.title = chrome.i18n.getMessage("infoBtn") || "View Details";
+        
         const copyBtn = document.createElement("button");
         copyBtn.className = "icon-btn";
         copyBtn.innerHTML = "📋"; // Copy icon
-        copyBtn.title = chrome.i18n.getMessage("copyCommandBtn");
+        copyBtn.title = getI18nMsg("copyCommandBtn");
         copyBtn.addEventListener("click", () => copyCommand(currentOwner, currentRepo, skill.path, copyBtn));
 
         const dlBtn = document.createElement("button");
         dlBtn.className = "icon-btn primary";
         dlBtn.innerHTML = "📦"; // Zip icon
-        dlBtn.title = chrome.i18n.getMessage("downloadBtn");
+        dlBtn.title = getI18nMsg("downloadBtn");
         dlBtn.addEventListener("click", () => downloadSkill(skill.path, li));
 
+        actionsDiv.appendChild(infoBtn);
         actionsDiv.appendChild(copyBtn);
         actionsDiv.appendChild(dlBtn);
 
-        li.appendChild(infoDiv);
-        li.appendChild(actionsDiv);
+        const mainDiv = document.createElement("div");
+        mainDiv.className = "skill-main";
+        mainDiv.appendChild(infoDiv);
+        mainDiv.appendChild(actionsDiv);
+
+        const detailsDiv = document.createElement("div");
+        detailsDiv.className = "skill-details";
+        
+        infoBtn.addEventListener("click", () => {
+          if (detailsDiv.classList.contains("open")) {
+            detailsDiv.classList.remove("open");
+          } else {
+            detailsDiv.classList.add("open");
+            loadSkillMeta(currentOwner, currentRepo, defaultBranch, skill.path, detailsDiv);
+          }
+        });
+
+        li.appendChild(mainDiv);
+        li.appendChild(detailsDiv);
         skillsList.appendChild(li);
       });
     });
   }
 
   function loadHistory() {
-    historyList.innerHTML = `<li>${chrome.i18n.getMessage("loadingHistory")}</li>`;
+    historyList.innerHTML = `<li>${getI18nMsg("loadingHistory")}</li>`;
     chrome.runtime.sendMessage({ type: "GET_HISTORY" }, (response) => {
       if (response && response.success) {
         historyData = response.skills;
@@ -265,7 +288,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         historyData.sort((a, b) => b.lastDetected - a.lastDetected);
         renderHistory(historyData);
       } else {
-        historyList.innerHTML = `<li>${chrome.i18n.getMessage("errorLoadingHistory")}</li>`;
+        historyList.innerHTML = `<li>${getI18nMsg("errorLoadingHistory")}</li>`;
       }
     });
   }
@@ -273,7 +296,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   function renderHistory(skills) {
     historyList.innerHTML = "";
     if (skills.length === 0) {
-      historyList.innerHTML = `<li>${chrome.i18n.getMessage("noSkillsInHistory")}</li>`;
+      historyList.innerHTML = `<li>${getI18nMsg("noSkillsInHistory")}</li>`;
       return;
     }
 
@@ -298,7 +321,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const metaDiv = document.createElement("div");
       metaDiv.className = "skill-meta";
       const date = new Date(skill.lastRepoUpdate || skill.lastDetected).toLocaleDateString();
-      metaDiv.textContent = `${chrome.i18n.getMessage("updatedPrefix")}${date}`;
+      metaDiv.textContent = `${getI18nMsg("updatedPrefix")}${date}`;
 
       infoDiv.appendChild(nameDiv);
       infoDiv.appendChild(repoDiv);
@@ -308,27 +331,96 @@ document.addEventListener("DOMContentLoaded", async () => {
       const actionsDiv = document.createElement("div");
       actionsDiv.className = "skill-actions";
 
+      const infoBtn = document.createElement("button");
+      infoBtn.className = "icon-btn";
+      infoBtn.innerHTML = "ℹ️";
+      infoBtn.title = chrome.i18n.getMessage("infoBtn") || "View Details";
+
       const copyBtn = document.createElement("button");
       copyBtn.className = "icon-btn";
       copyBtn.innerHTML = "📋";
-      copyBtn.title = chrome.i18n.getMessage("copyCommandBtn");
+      copyBtn.title = getI18nMsg("copyCommandBtn");
       copyBtn.addEventListener("click", () => copyCommand(skill.owner, skill.repo, skill.path, copyBtn));
 
       const dlBtn = document.createElement("button");
       dlBtn.className = "icon-btn primary";
       dlBtn.innerHTML = "📦";
-      dlBtn.title = chrome.i18n.getMessage("downloadBtn");
+      dlBtn.title = getI18nMsg("downloadBtn");
       dlBtn.addEventListener("click", () => downloadFromHistory(skill, li));
 
+      actionsDiv.appendChild(infoBtn);
       actionsDiv.appendChild(copyBtn);
       actionsDiv.appendChild(dlBtn);
 
-      li.appendChild(infoDiv);
-      li.appendChild(actionsDiv);
+      const mainDiv = document.createElement("div");
+      mainDiv.className = "skill-main";
+      mainDiv.appendChild(infoDiv);
+      mainDiv.appendChild(actionsDiv);
+
+      const detailsDiv = document.createElement("div");
+      detailsDiv.className = "skill-details";
+
+      infoBtn.addEventListener("click", () => {
+        if (detailsDiv.classList.contains("open")) {
+          detailsDiv.classList.remove("open");
+        } else {
+          detailsDiv.classList.add("open");
+          loadSkillMeta(skill.owner, skill.repo, skill.defaultBranch, skill.path, detailsDiv);
+        }
+      });
+
+      li.appendChild(mainDiv);
+      li.appendChild(detailsDiv);
       historyList.appendChild(li);
       });
       }
       });
+
+      async function loadSkillMeta(owner, repo, branch, skillPath, container) {
+        if (container.dataset.loaded) return;
+        
+        container.innerHTML = `<em>${getI18nMsg("loadingDetails")}</em>`;
+        const path = skillPath === "." ? "SKILL.md" : `${skillPath}/SKILL.md`;
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${path}`;
+
+        try {
+          const res = await fetch(rawUrl);
+          if (!res.ok) throw new Error("Failed to fetch");
+          const text = await res.text();
+          
+          let name = "";
+          let description = getI18nMsg("noDescription");
+          
+          // Simple frontmatter regex parser
+          const fmMatch = text.match(/^---\n([\s\S]*?)\n---/);
+          if (fmMatch) {
+            const fmContent = fmMatch[1];
+            const nameMatch = fmContent.match(/name:\s*(.+)/);
+            // Multi-line description might be tricky, try single or simple multi
+            const descMatch = fmContent.match(/description:\s*(?:>|\|)?\s*([\s\S]*?)(?=\n[a-z]+:|$)/i);
+
+            if (nameMatch) name = nameMatch[1].trim();
+            if (descMatch) description = descMatch[1].trim();
+          }
+
+          container.innerHTML = "";
+          if (name) {
+             const nameEl = document.createElement("strong");
+             nameEl.textContent = name;
+             container.appendChild(nameEl);
+             container.appendChild(document.createElement("br"));
+          }
+          
+          const descEl = document.createElement("div");
+          descEl.className = "skill-desc";
+          descEl.textContent = description;
+          container.appendChild(descEl);
+          
+          container.dataset.loaded = "true";
+        } catch (e) {
+          container.innerHTML = `<em style="color:red;">${getI18nMsg("errorParsingMeta")}</em>`;
+        }
+      }
 
       function copyCommand(owner, repo, skillPath, btnElement) {
       // e.g. https://github.com/vercel-labs/skills
