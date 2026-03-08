@@ -7,6 +7,8 @@ A Manifest V3 Chrome Extension that helps you discover, manage, and download AI 
 - **Instant Discovery**: Automatically scans GitHub repositories for any valid AI Agent Skills using the efficient GitHub Git Trees API.
 - **Background Auto-Detect**: Optionally enable background scanning so skills are silently logged to your history just by browsing GitHub.
 - **History & Search**: All discovered skills are saved to a local database (IndexedDB) with a built-in search to easily find and download them later, even if you are no longer on the GitHub page.
+- **Passive Metadata Caching**: If you view a `SKILL.md` file natively on GitHub, the extension quietly extracts its metadata (name, description) in the background and enriches your history database.
+- **On-Demand Details**: Click the info icon (ℹ️) next to any skill to lazily load and view its metadata instantly without navigating away.
 - **Dual Installation Modes**:
   - 📋 **Copy CLI Command**: Instantly copies the `npx skills add <url>` command for quick terminal installation.
   - 📦 **Direct ZIP Download**: Downloads all files related to the skill bundled securely in a `.zip` archive without leaving the browser.

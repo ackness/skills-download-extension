@@ -70,6 +70,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     fetchTreeBySha(request.owner, request.repo, request.treeSha).then(sendResponse);
     return true;
   }
+  
+  if (request.type === "SAVE_SKILL_META") {
+    // Save passively detected skill from content script
+    saveSkillsToDB([request.skillData]).catch(e => console.error("Failed to passively save skill meta", e));
+    // Provide a dummy response
+    sendResponse({ success: true });
+    return false;
+  }
 });
 
 
