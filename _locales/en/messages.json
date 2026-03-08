@@ -121,5 +121,14 @@
   },
   "langSystem": {
     "message": "System Default"
+  },
+  "errorPrefix": {
+    "message": "Error: "
+  },
+  "errorFetchRepo": {
+    "message": "Failed to fetch repo info. Ensure this is a valid repository or check token limits."
+  },
+  "errorFetchTree": {
+    "message": "Failed to fetch repository tree. Check token limits."
   }
 }

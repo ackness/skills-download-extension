@@ -122,14 +122,14 @@ async function handleFetchSkills(owner, repo, tabId) {
 
     // 1. Get default branch & metadata
     const repoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers });
-    if (!repoRes.ok) throw new Error("Failed to fetch repo info. Check rate limits or token.");
+    if (!repoRes.ok) throw new Error("errorFetchRepo");
     const repoData = await repoRes.json();
     const defaultBranch = repoData.default_branch;
     const repoUpdatedAt = repoData.pushed_at || repoData.updated_at || new Date().toISOString();
 
     // 2. Get tree
     const treeRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/git/trees/${defaultBranch}?recursive=1`, { headers });
-    if (!treeRes.ok) throw new Error("Failed to fetch tree. Check rate limits or token.");
+    if (!treeRes.ok) throw new Error("errorFetchTree");
     const treeData = await treeRes.json();
     
     if (treeData.truncated) {

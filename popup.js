@@ -189,7 +189,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
       if (!response.success) {
-        statusDiv.textContent = "Error: " + response.error;
+        // Try to translate the error if it matches a key, otherwise show raw error.
+        const translatedError = getI18nMsg(response.error);
+        statusDiv.textContent = getI18nMsg("errorPrefix") + (translatedError || response.error);
         return;
       }
 

@@ -121,5 +121,14 @@
   },
   "langSystem": {
     "message": "系统默认"
+  },
+  "errorPrefix": {
+    "message": "错误："
+  },
+  "errorFetchRepo": {
+    "message": "无法获取仓库信息，请确保这是一个有效的代码仓库，或检查 Token 速率限制。"
+  },
+  "errorFetchTree": {
+    "message": "无法获取仓库文件树，请检查 Token 速率限制。"
   }
 }
