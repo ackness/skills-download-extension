@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const tabHistory = document.getElementById("tabHistory");
   const backBtn = document.getElementById("backBtn");
   const saveTokenBtn = document.getElementById("saveTokenBtn");
+  const clearHistoryBtn = document.getElementById("clearHistoryBtn");
   
   const mainView = document.getElementById("mainView");
   const settingsView = document.getElementById("settingsView");
@@ -139,6 +140,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert(getI18nMsg("settingsSaved"));
     showView(mainView);
     loadSkills(); // reload with new token
+  });
+
+  clearHistoryBtn.addEventListener("click", async () => {
+    const confirmMsg = getI18nMsg("confirmClearHistory") || "Are you sure you want to clear all history? This cannot be undone.";
+    if (!confirm(confirmMsg)) return;
+    
+    chrome.runtime.sendMessage({ type: "CLEAR_HISTORY" }, (response) => {
+      if (response && response.success) {
+        alert(getI18nMsg("historyClearedSuccess") || "History cleared successfully!");
+        // Reload history view if currently visible
+        if (historyView.style.display === "block") {
+          loadHistory();
+        }
+      } else {
+        alert(getI18nMsg("historyClearedError") || "Failed to clear history.");
+      }
+    });
   });
 
   searchInput.addEventListener("input", (e) => {
@@ -312,11 +330,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const repoDiv = document.createElement("div");
       repoDiv.className = "skill-repo";
-      repoDiv.textContent = `${skill.owner}/${skill.repo}`;
+      const repoLink = document.createElement("a");
+      repoLink.href = `https://github.com/${skill.owner}/${skill.repo}`;
+      repoLink.target = "_blank";
+      repoLink.textContent = `${skill.owner}/${skill.repo}`;
+      repoLink.style.color = "#0366d6";
+      repoLink.style.textDecoration = "none";
+      repoLink.addEventListener("mouseenter", () => repoLink.style.textDecoration = "underline");
+      repoLink.addEventListener("mouseleave", () => repoLink.style.textDecoration = "none");
+      repoDiv.appendChild(repoLink);
       
       const pathDiv = document.createElement("div");
       pathDiv.className = "skill-path";
-      pathDiv.textContent = skill.path;
+      const pathLink = document.createElement("a");
+      const pathUrl = skill.path === "." 
+        ? `https://github.com/${skill.owner}/${skill.repo}`
+        : `https://github.com/${skill.owner}/${skill.repo}/tree/${skill.defaultBranch}/${skill.path}`;
+      pathLink.href = pathUrl;
+      pathLink.target = "_blank";
+      pathLink.textContent = skill.path;
+      pathLink.style.color = "#586069";
+      pathLink.style.textDecoration = "none";
+      pathLink.addEventListener("mouseenter", () => pathLink.style.textDecoration = "underline");
+      pathLink.addEventListener("mouseleave", () => pathLink.style.textDecoration = "none");
+      pathDiv.appendChild(pathLink);
 
       const metaDiv = document.createElement("div");
       metaDiv.className = "skill-meta";
@@ -396,30 +433,248 @@ document.addEventListener("DOMContentLoaded", async () => {
           if (fmMatch) {
             const fmContent = fmMatch[1];
             const nameMatch = fmContent.match(/name:\s*(.+)/);
-            // Multi-line description might be tricky, try single or simple multi
             const descMatch = fmContent.match(/description:\s*(?:>|\|)?\s*([\s\S]*?)(?=\n[a-z]+:|$)/i);
 
             if (nameMatch) name = nameMatch[1].trim();
             if (descMatch) description = descMatch[1].trim();
           }
 
+          // Create metadata view (first level)
           container.innerHTML = "";
+          container.dataset.viewState = "meta";
+          
+          const metaView = document.createElement("div");
+          metaView.className = "detail-meta-view";
+          
           if (name) {
-             const nameEl = document.createElement("strong");
-             nameEl.textContent = name;
-             container.appendChild(nameEl);
-             container.appendChild(document.createElement("br"));
+            const nameEl = document.createElement("strong");
+            nameEl.textContent = name;
+            metaView.appendChild(nameEl);
+            metaView.appendChild(document.createElement("br"));
           }
           
           const descEl = document.createElement("div");
           descEl.className = "skill-desc";
           descEl.textContent = description;
-          container.appendChild(descEl);
+          metaView.appendChild(descEl);
           
+          // Action buttons
+          const actionBtns = document.createElement("div");
+          actionBtns.className = "detail-actions";
+          actionBtns.style.marginTop = "12px";
+          actionBtns.style.display = "flex";
+          actionBtns.style.gap = "8px";
+          
+          const viewFullBtn = document.createElement("button");
+          viewFullBtn.className = "detail-action-btn";
+          viewFullBtn.innerHTML = "📄 查看完整 SKILL.md";
+          viewFullBtn.addEventListener("click", () => showFullSkillMd(container, text, owner, repo, branch, skillPath));
+          
+          const viewTreeBtn = document.createElement("button");
+          viewTreeBtn.className = "detail-action-btn";
+          viewTreeBtn.innerHTML = "🌲 查看文件树";
+          viewTreeBtn.addEventListener("click", () => showFileTree(container, owner, repo, branch, skillPath));
+          
+          actionBtns.appendChild(viewFullBtn);
+          actionBtns.appendChild(viewTreeBtn);
+          metaView.appendChild(actionBtns);
+          
+          container.appendChild(metaView);
           container.dataset.loaded = "true";
+          container.dataset.skillmdContent = text;
         } catch (e) {
           container.innerHTML = `<em style="color:red;">${getI18nMsg("errorParsingMeta")}</em>`;
         }
+      }
+      
+      function showFullSkillMd(container, content, owner, repo, branch, skillPath) {
+        container.dataset.viewState = "fullmd";
+        container.innerHTML = "";
+        
+        const fullView = document.createElement("div");
+        fullView.className = "detail-full-view";
+        
+        const backBtn = document.createElement("button");
+        backBtn.className = "detail-back-btn";
+        backBtn.innerHTML = "← 返回元数据";
+        backBtn.addEventListener("click", () => {
+          container.dataset.viewState = "meta";
+          loadSkillMeta(owner, repo, branch, skillPath, container);
+          container.dataset.loaded = "";
+        });
+        fullView.appendChild(backBtn);
+        
+        const contentDiv = document.createElement("pre");
+        contentDiv.style.whiteSpace = "pre-wrap";
+        contentDiv.style.fontSize = "12px";
+        contentDiv.style.lineHeight = "1.5";
+        contentDiv.style.marginTop = "8px";
+        contentDiv.style.padding = "8px";
+        contentDiv.style.background = "#f6f8fa";
+        contentDiv.style.borderRadius = "4px";
+        contentDiv.style.maxHeight = "400px";
+        contentDiv.style.overflow = "auto";
+        contentDiv.textContent = content;
+        fullView.appendChild(contentDiv);
+        
+        container.appendChild(fullView);
+      }
+      
+      async function showFileTree(container, owner, repo, branch, skillPath) {
+        container.dataset.viewState = "tree";
+        container.innerHTML = `<em>${getI18nMsg("loadingDetails")}</em>`;
+        
+        try {
+          // Get tree data
+          const response = await new Promise((resolve) => {
+            chrome.runtime.sendMessage({
+              type: "GET_TREE_BY_SHA",
+              owner: owner,
+              repo: repo,
+              treeSha: branch
+            }, resolve);
+          });
+          
+          if (!response || !response.success) {
+            // Fallback: try to get from current tree if available
+            const tree = currentTree;
+            if (!tree || tree.length === 0) {
+              throw new Error("Failed to fetch tree");
+            }
+            renderFileTree(container, tree, owner, repo, branch, skillPath);
+          } else {
+            renderFileTree(container, response.tree, owner, repo, branch, skillPath);
+          }
+        } catch (e) {
+          container.innerHTML = `<em style="color:red;">Failed to load file tree</em>`;
+        }
+      }
+      
+      function renderFileTree(container, tree, owner, repo, branch, skillPath) {
+        container.innerHTML = "";
+        
+        const treeView = document.createElement("div");
+        treeView.className = "detail-tree-view";
+        
+        const backBtn = document.createElement("button");
+        backBtn.className = "detail-back-btn";
+        backBtn.innerHTML = "← 返回元数据";
+        backBtn.addEventListener("click", () => {
+          container.dataset.viewState = "meta";
+          loadSkillMeta(owner, repo, branch, skillPath, container);
+          container.dataset.loaded = "";
+        });
+        treeView.appendChild(backBtn);
+        
+        // Filter files under skillPath
+        const prefix = skillPath === "." ? "" : skillPath + "/";
+        const files = tree.filter(item => {
+          if (item.type !== "blob") return false;
+          return prefix === "" || item.path.startsWith(prefix);
+        });
+        
+        // Build tree structure
+        const treeStructure = buildTreeStructure(files, prefix);
+        
+        const treeContainer = document.createElement("div");
+        treeContainer.className = "file-tree";
+        treeContainer.style.marginTop = "12px";
+        treeContainer.style.fontSize = "13px";
+        treeContainer.style.fontFamily = "monospace";
+        
+        renderTreeNode(treeContainer, treeStructure, owner, repo, branch, prefix, 0);
+        
+        treeView.appendChild(treeContainer);
+        container.appendChild(treeView);
+      }
+      
+      function buildTreeStructure(files, prefix) {
+        const root = { name: prefix || "root", type: "folder", children: {} };
+        
+        files.forEach(file => {
+          const relativePath = prefix ? file.path.substring(prefix.length) : file.path;
+          const parts = relativePath.split("/");
+          
+          let current = root;
+          parts.forEach((part, index) => {
+            if (index === parts.length - 1) {
+              // File
+              current.children[part] = { name: part, type: "file", path: file.path };
+            } else {
+              // Folder
+              if (!current.children[part]) {
+                current.children[part] = { name: part, type: "folder", children: {} };
+              }
+              current = current.children[part];
+            }
+          });
+        });
+        
+        return root;
+      }
+      
+      function renderTreeNode(container, node, owner, repo, branch, prefix, depth) {
+        const entries = Object.entries(node.children || {}).sort((a, b) => {
+          // Folders first, then files
+          if (a[1].type === "folder" && b[1].type === "file") return -1;
+          if (a[1].type === "file" && b[1].type === "folder") return 1;
+          return a[0].localeCompare(b[0]);
+        });
+        
+        entries.forEach(([name, child]) => {
+          const item = document.createElement("div");
+          item.className = "tree-item";
+          item.style.paddingLeft = `${depth * 16}px`;
+          item.style.padding = "2px 4px";
+          item.style.cursor = "pointer";
+          item.style.display = "flex";
+          item.style.alignItems = "center";
+          
+          if (child.type === "folder") {
+            const icon = document.createElement("span");
+            icon.textContent = "▸ 📁 ";
+            icon.style.marginRight = "4px";
+            
+            const label = document.createElement("span");
+            label.textContent = name;
+            label.style.color = "#0366d6";
+            
+            item.appendChild(icon);
+            item.appendChild(label);
+            
+            let expanded = false;
+            const childContainer = document.createElement("div");
+            childContainer.style.display = "none";
+            
+            item.addEventListener("click", (e) => {
+              e.stopPropagation();
+              expanded = !expanded;
+              icon.textContent = expanded ? "▾ 📁 " : "▸ 📁 ";
+              childContainer.style.display = expanded ? "block" : "none";
+            });
+            
+            container.appendChild(item);
+            container.appendChild(childContainer);
+            renderTreeNode(childContainer, child, owner, repo, branch, prefix, depth + 1);
+          } else {
+            const icon = document.createElement("span");
+            icon.textContent = "📄 ";
+            icon.style.marginRight = "4px";
+            
+            const link = document.createElement("a");
+            link.href = `https://github.com/${owner}/${repo}/blob/${branch}/${child.path}`;
+            link.target = "_blank";
+            link.textContent = name;
+            link.style.color = "#24292e";
+            link.style.textDecoration = "none";
+            link.addEventListener("mouseenter", () => link.style.textDecoration = "underline");
+            link.addEventListener("mouseleave", () => link.style.textDecoration = "none");
+            
+            item.appendChild(icon);
+            item.appendChild(link);
+            container.appendChild(item);
+          }
+        });
       }
 
       function copyCommand(owner, repo, skillPath, btnElement) {

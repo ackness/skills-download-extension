@@ -49,6 +49,18 @@ async function getAllSkillsFromDB() {
   });
 }
 
+async function clearAllSkillsFromDB() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NAME, "readwrite");
+    const store = tx.objectStore(STORE_NAME);
+    const request = store.clear();
+    
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
 
 // --- Message Listeners ---
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -77,6 +89,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // Provide a dummy response
     sendResponse({ success: true });
     return false;
+  }
+  
+  if (request.type === "CLEAR_HISTORY") {
+    clearAllSkillsFromDB().then(() => sendResponse({ success: true })).catch(err => sendResponse({ success: false, error: err.message }));
+    return true;
   }
 });
 
@@ -205,8 +222,7 @@ async function handleFetchSkills(owner, repo, tabId) {
       [cacheKey]: {
         treeSha: treeData.sha,
         skills: skillList,
-        defaultBranch: defaultBranch,
-        tree: treeData.tree
+        defaultBranch: defaultBranch
       }
     });
     

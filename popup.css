@@ -129,6 +129,68 @@ li {
   line-height: 1.4;
 }
 
+/* Detail action buttons */
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.detail-action-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  border: 1px solid #0366d6;
+  background: white;
+  color: #0366d6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.detail-action-btn:hover {
+  background: #0366d6;
+  color: white;
+}
+
+.detail-back-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  border: 1px solid #d1d5da;
+  background: #fafbfc;
+  color: #24292e;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+
+.detail-back-btn:hover {
+  background: #f3f4f6;
+  border-color: #959da5;
+}
+
+/* File tree styles */
+.file-tree {
+  background: #f6f8fa;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  padding: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.tree-item {
+  padding: 2px 4px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.tree-item:hover {
+  background: #e1e4e8;
+  border-radius: 3px;
+}
+
 .skill-info {
   display: flex;
   flex-direction: column;
