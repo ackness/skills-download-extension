@@ -17,6 +17,9 @@
   "settingsBtnTitle": {
     "message": "Settings"
   },
+  "closeBtnTitle": {
+    "message": "Close"
+  },
   "noTokenWarning": {
     "message": "No GitHub Token. "
   },
@@ -35,11 +38,38 @@
   "settingsTitle": {
     "message": "Settings"
   },
+  "settingsSubtitle": {
+    "message": "A quieter, cleaner place to manage language, scanning, and local data."
+  },
+  "settingsSectionGeneral": {
+    "message": "General"
+  },
+  "settingsSectionGeneralNote": {
+    "message": "Control display language and background scanning."
+  },
+  "settingsSectionAccess": {
+    "message": "GitHub Access"
+  },
+  "settingsSectionAccessNote": {
+    "message": "Use a token to reduce API rate limits when scanning public repositories."
+  },
+  "settingsSectionStorage": {
+    "message": "Local Data"
+  },
+  "settingsSectionStorageNote": {
+    "message": "Only affects data stored in this browser."
+  },
   "autoDetectLabel": {
     "message": "Auto-detect skills on GitHub pages"
   },
+  "autoDetectHint": {
+    "message": "Scan GitHub repositories quietly while you browse."
+  },
   "githubTokenLabel": {
     "message": "GitHub Token ("
+  },
+  "githubTokenFieldLabel": {
+    "message": "GitHub Token"
   },
   "getOneHere": {
     "message": "Get one here"
@@ -52,6 +82,24 @@
   },
   "backBtn": {
     "message": "Back to Scanner"
+  },
+  "clearHistoryLabel": {
+    "message": "Clear History"
+  },
+  "clearHistoryBtn": {
+    "message": "Clear All History"
+  },
+  "clearHistoryWarning": {
+    "message": "This will permanently delete all saved skill history from IndexedDB."
+  },
+  "confirmClearHistory": {
+    "message": "Are you sure you want to clear all history? This cannot be undone."
+  },
+  "historyClearedSuccess": {
+    "message": "History cleared successfully."
+  },
+  "historyClearedError": {
+    "message": "Failed to clear history."
   },
   "detectingRepo": {
     "message": "Detecting GitHub repo..."
@@ -76,6 +124,9 @@
   },
   "downloadBtn": {
     "message": "Download"
+  },
+  "downloadCollectionBtn": {
+    "message": "Download collection"
   },
   "loadingHistory": {
     "message": "Loading history..."
@@ -110,8 +161,17 @@
   "copiedState": {
     "message": "Copied!"
   },
+  "copyFailed": {
+    "message": "Failed to copy."
+  },
   "infoBtn": {
     "message": "View Details"
+  },
+  "addToCollectionBtn": {
+    "message": "Add to collection"
+  },
+  "removeFromCollectionBtn": {
+    "message": "Remove from collection"
   },
   "loadingDetails": {
     "message": "Loading metadata..."
@@ -122,11 +182,35 @@
   "errorParsingMeta": {
     "message": "Failed to load metadata."
   },
+  "viewFullSkillBtn": {
+    "message": "View full SKILL.md"
+  },
+  "viewFileTreeBtn": {
+    "message": "View file tree"
+  },
+  "backToMetaBtn": {
+    "message": "Back to metadata"
+  },
+  "fileTreeLoadError": {
+    "message": "Failed to load file tree."
+  },
   "tabCurrent": {
     "message": "Current Repo"
   },
+  "currentViewSubtitle": {
+    "message": "Scan the active GitHub repository and pull useful skills into your flow."
+  },
   "tabHistory": {
     "message": "All History"
+  },
+  "historyViewSubtitle": {
+    "message": "Everything you discovered stays here for quick local reuse."
+  },
+  "tabCollections": {
+    "message": "Collections"
+  },
+  "collectionsViewSubtitle": {
+    "message": "Group saved skills into focused bundles and download them together."
   },
   "languageLabel": {
     "message": "Language"
@@ -142,5 +226,71 @@
   },
   "errorFetchTree": {
     "message": "Failed to fetch repository tree. Check token limits."
+  },
+  "collectionNamePlaceholder": {
+    "message": "Create a collection..."
+  },
+  "createCollectionBtn": {
+    "message": "Create"
+  },
+  "createAndAddCollectionBtn": {
+    "message": "Create & Add"
+  },
+  "loadingCollections": {
+    "message": "Loading collections..."
+  },
+  "errorLoadingCollections": {
+    "message": "Failed to load collections."
+  },
+  "noCollections": {
+    "message": "No collections yet."
+  },
+  "collectionCountUnit": {
+    "message": "skills"
+  },
+  "collectionModalTitle": {
+    "message": "Add to Collections"
+  },
+  "collectionModalHelp": {
+    "message": "Choose one or more collections for this skill."
+  },
+  "collectionModalEmpty": {
+    "message": "No collections yet. Create one first."
+  },
+  "collectionModalNamePlaceholder": {
+    "message": "Create a new collection and add this skill..."
+  },
+  "collectionNameRequired": {
+    "message": "Collection name is required."
+  },
+  "collectionAlreadyExists": {
+    "message": "A collection with this name already exists."
+  },
+  "collectionNotFound": {
+    "message": "Collection not found."
+  },
+  "viewCollectionBtn": {
+    "message": "View"
+  },
+  "hideCollectionBtn": {
+    "message": "Hide"
+  },
+  "renameCollectionBtn": {
+    "message": "Rename collection"
+  },
+  "deleteCollectionBtn": {
+    "message": "Delete collection"
+  },
+  "renameCollectionPrompt": {
+    "message": "Enter a new collection name"
+  },
+  "collectionDeleteConfirm": {
+    "message": "Delete collection"
+  },
+  "noSkillsInCollection": {
+    "message": "There are no skills in this collection yet."
+  },
+  "skillFilesMissing": {
+    "message": "No files were found for this skill."
   }
 }

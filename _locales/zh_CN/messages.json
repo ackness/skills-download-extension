@@ -17,6 +17,9 @@
   "settingsBtnTitle": {
     "message": "设置"
   },
+  "closeBtnTitle": {
+    "message": "关闭"
+  },
   "noTokenWarning": {
     "message": "未设置 GitHub Token。"
   },
@@ -35,11 +38,38 @@
   "settingsTitle": {
     "message": "设置"
   },
+  "settingsSubtitle": {
+    "message": "更安静、更清晰地管理语言、扫描方式和本地数据。"
+  },
+  "settingsSectionGeneral": {
+    "message": "常规"
+  },
+  "settingsSectionGeneralNote": {
+    "message": "控制显示语言和后台扫描行为。"
+  },
+  "settingsSectionAccess": {
+    "message": "GitHub 访问"
+  },
+  "settingsSectionAccessNote": {
+    "message": "添加 Token 以减少公开仓库扫描时的 API 速率限制。"
+  },
+  "settingsSectionStorage": {
+    "message": "本地数据"
+  },
+  "settingsSectionStorageNote": {
+    "message": "这里只影响当前浏览器中保存的数据。"
+  },
   "autoDetectLabel": {
     "message": "在 GitHub 页面自动探测 skills"
   },
+  "autoDetectHint": {
+    "message": "浏览 GitHub 时在后台静默扫描仓库。"
+  },
   "githubTokenLabel": {
     "message": "GitHub Token ("
+  },
+  "githubTokenFieldLabel": {
+    "message": "GitHub Token"
   },
   "getOneHere": {
     "message": "在此获取"
@@ -52,6 +82,24 @@
   },
   "backBtn": {
     "message": "返回扫描器"
+  },
+  "clearHistoryLabel": {
+    "message": "清空历史记录"
+  },
+  "clearHistoryBtn": {
+    "message": "清空全部历史记录"
+  },
+  "clearHistoryWarning": {
+    "message": "这会永久删除 IndexedDB 中保存的技能历史记录。"
+  },
+  "confirmClearHistory": {
+    "message": "确定要清空全部历史记录吗？此操作不可撤销。"
+  },
+  "historyClearedSuccess": {
+    "message": "历史记录已清空。"
+  },
+  "historyClearedError": {
+    "message": "清空历史记录失败。"
   },
   "detectingRepo": {
     "message": "正在检测 GitHub 仓库..."
@@ -69,13 +117,16 @@
     "message": "与后台脚本通信出错。"
   },
   "noSkillsFound": {
-    "message": "未找到 skills (没有 SKILL.md 文件)。"
+    "message": "未找到 skills（没有 SKILL.md 文件）。"
   },
   "updatedBadge": {
     "message": "已更新"
   },
   "downloadBtn": {
     "message": "下载"
+  },
+  "downloadCollectionBtn": {
+    "message": "下载收藏包"
   },
   "loadingHistory": {
     "message": "正在加载历史记录..."
@@ -110,8 +161,17 @@
   "copiedState": {
     "message": "已复制！"
   },
+  "copyFailed": {
+    "message": "复制失败。"
+  },
   "infoBtn": {
     "message": "查看详情"
+  },
+  "addToCollectionBtn": {
+    "message": "加入收藏包"
+  },
+  "removeFromCollectionBtn": {
+    "message": "从收藏包移除"
   },
   "loadingDetails": {
     "message": "正在加载元数据..."
@@ -122,11 +182,35 @@
   "errorParsingMeta": {
     "message": "无法加载元数据。"
   },
+  "viewFullSkillBtn": {
+    "message": "查看完整 SKILL.md"
+  },
+  "viewFileTreeBtn": {
+    "message": "查看文件树"
+  },
+  "backToMetaBtn": {
+    "message": "返回元数据"
+  },
+  "fileTreeLoadError": {
+    "message": "加载文件树失败。"
+  },
   "tabCurrent": {
     "message": "当前仓库"
   },
+  "currentViewSubtitle": {
+    "message": "扫描当前 GitHub 仓库，把有价值的技能快速收进你的工作流。"
+  },
   "tabHistory": {
     "message": "全部历史"
+  },
+  "historyViewSubtitle": {
+    "message": "你曾发现过的内容都会留在这里，方便以后快速回用。"
+  },
+  "tabCollections": {
+    "message": "收藏包"
+  },
+  "collectionsViewSubtitle": {
+    "message": "把已保存的技能编组成主题包，然后一起下载。"
   },
   "languageLabel": {
     "message": "语言"
@@ -142,5 +226,71 @@
   },
   "errorFetchTree": {
     "message": "无法获取仓库文件树，请检查 Token 速率限制。"
+  },
+  "collectionNamePlaceholder": {
+    "message": "创建一个收藏包..."
+  },
+  "createCollectionBtn": {
+    "message": "创建"
+  },
+  "createAndAddCollectionBtn": {
+    "message": "创建并加入"
+  },
+  "loadingCollections": {
+    "message": "正在加载收藏包..."
+  },
+  "errorLoadingCollections": {
+    "message": "加载收藏包失败。"
+  },
+  "noCollections": {
+    "message": "还没有收藏包。"
+  },
+  "collectionCountUnit": {
+    "message": "个技能"
+  },
+  "collectionModalTitle": {
+    "message": "加入收藏包"
+  },
+  "collectionModalHelp": {
+    "message": "选择一个或多个收藏包来收藏这个技能。"
+  },
+  "collectionModalEmpty": {
+    "message": "还没有收藏包，先创建一个。"
+  },
+  "collectionModalNamePlaceholder": {
+    "message": "创建新收藏包并加入..."
+  },
+  "collectionNameRequired": {
+    "message": "收藏包名称不能为空。"
+  },
+  "collectionAlreadyExists": {
+    "message": "收藏包名称已存在。"
+  },
+  "collectionNotFound": {
+    "message": "未找到收藏包。"
+  },
+  "viewCollectionBtn": {
+    "message": "查看"
+  },
+  "hideCollectionBtn": {
+    "message": "收起"
+  },
+  "renameCollectionBtn": {
+    "message": "重命名收藏包"
+  },
+  "deleteCollectionBtn": {
+    "message": "删除收藏包"
+  },
+  "renameCollectionPrompt": {
+    "message": "输入新的收藏包名称"
+  },
+  "collectionDeleteConfirm": {
+    "message": "确定删除收藏包"
+  },
+  "noSkillsInCollection": {
+    "message": "这个收藏包里还没有技能。"
+  },
+  "skillFilesMissing": {
+    "message": "未找到这个技能对应的文件。"
   }
 }

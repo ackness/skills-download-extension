@@ -10,57 +10,141 @@
       <div class="tabs">
         <button id="tabCurrent" class="tab active" data-i18n="tabCurrent">Current Repo</button>
         <button id="tabHistory" class="tab" data-i18n="tabHistory">All History</button>
+        <button id="tabCollections" class="tab" data-i18n="tabCollections">Collections</button>
       </div>
       <div class="header-actions">
         <button id="settingsBtn" title="Settings" data-i18n-title="settingsBtnTitle">⚙️</button>
       </div>
     </div>
 
-    <div id="mainView">
-      <div id="tokenWarning" style="display: none; background: #fff3cd; color: #856404; padding: 10px; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ffeeba; font-size: 11px; text-align: center;">
-        <span data-i18n="noTokenWarning">No GitHub Token. </span><a href="#" id="linkToSettings" style="color: #005cc5; font-weight: bold; text-decoration: none;" data-i18n="addTokenLink">Add a token</a><span data-i18n="toPreventLimits"> to prevent API limits.</span>
+    <div id="mainView" class="view-shell">
+      <div class="view-hero">
+        <h3 data-i18n="tabCurrent">Current Repo</h3>
+        <p class="view-subtitle" data-i18n="currentViewSubtitle">Scan the active GitHub repository and collect what matters.</p>
       </div>
-      <div id="status" data-i18n="loading">Loading...</div>
-      <ul id="skillsList"></ul>
+      <div class="view-content">
+        <input type="text" id="currentSearchInput" class="view-input" placeholder="Search skills or repos..." data-i18n-placeholder="searchPlaceholder">
+        <div id="tokenWarning" class="inline-warning" style="display: none;">
+          <span data-i18n="noTokenWarning">No GitHub Token. </span>
+          <a href="#" id="linkToSettings" data-i18n="addTokenLink">Add a token</a>
+          <span data-i18n="toPreventLimits"> to prevent API limits.</span>
+        </div>
+        <div id="status" data-i18n="loading">Loading...</div>
+        <ul id="skillsList"></ul>
+      </div>
     </div>
 
-    <div id="historyView" style="display: none;">
-      <input type="text" id="searchInput" placeholder="Search skills or repos..." data-i18n-placeholder="searchPlaceholder">
-      <ul id="historyList"></ul>
+    <div id="historyView" class="view-shell" style="display: none;">
+      <div class="view-hero">
+        <h3 data-i18n="tabHistory">All History</h3>
+        <p class="view-subtitle" data-i18n="historyViewSubtitle">Everything you discovered, kept locally for quick reuse.</p>
+      </div>
+      <div class="view-content">
+        <input type="text" id="searchInput" class="view-input" placeholder="Search skills or repos..." data-i18n-placeholder="searchPlaceholder">
+        <ul id="historyList"></ul>
+      </div>
+    </div>
+
+    <div id="collectionsView" class="view-shell" style="display: none;">
+      <div class="view-hero">
+        <h3 data-i18n="tabCollections">Collections</h3>
+        <p class="view-subtitle" data-i18n="collectionsViewSubtitle">Group saved skills into focused bundles you can download together.</p>
+      </div>
+      <div class="view-content">
+        <div class="collection-create-row">
+          <input type="text" id="collectionNameInput" class="view-input" placeholder="Create a collection..." data-i18n-placeholder="collectionNamePlaceholder">
+          <button id="createCollectionBtn" data-i18n="createCollectionBtn">Create</button>
+        </div>
+        <ul id="collectionsList"></ul>
+      </div>
     </div>
 
     <div id="settingsView" style="display: none;">
-      <h3 data-i18n="settingsTitle">Settings</h3>
-      
-      <div class="setting-item">
-        <label><span data-i18n="languageLabel">Language</span>:</label>
-        <select id="langSelect">
-          <option value="system" data-i18n="langSystem">System Default</option>
-          <option value="en">English</option>
-          <option value="zh_CN">简体中文</option>
-        </select>
-      </div>
+      <div class="settings-shell">
+        <div class="settings-hero">
+          <h3 data-i18n="settingsTitle">Settings</h3>
+          <p class="settings-subtitle" data-i18n="settingsSubtitle">Quiet controls for language, scanning, and local data.</p>
+        </div>
 
-      <div class="setting-item">
-        <label>
-          <input type="checkbox" id="autoDetectCheck"> 
-          <span data-i18n="autoDetectLabel">Auto-detect skills on GitHub pages</span>
-        </label>
-      </div>
-      
-      <div class="setting-item">
-        <label><span data-i18n="githubTokenLabel">GitHub Token (</span><a href="https://github.com/settings/tokens/new?description=Skills+Download+Extension" target="_blank" style="color:#0366d6;" data-i18n="getOneHere">Get one here</a><span data-i18n="githubTokenSuffix">):</span></label>
-        <input type="password" id="tokenInput" placeholder="ghp_...">
-        <button id="saveTokenBtn" data-i18n="saveSettingsBtn">Save Settings</button>
-      </div>
+        <section class="settings-card">
+          <div class="settings-card-header">
+            <div class="settings-card-title" data-i18n="settingsSectionGeneral">General</div>
+            <p class="settings-card-note" data-i18n="settingsSectionGeneralNote">Language and background behavior.</p>
+          </div>
 
-      <div class="setting-item">
-        <label><span data-i18n="clearHistoryLabel">Clear History</span>:</label>
-        <button id="clearHistoryBtn" style="background-color: #d73a49; color: white;" data-i18n="clearHistoryBtn">Clear All History</button>
-        <p style="font-size: 11px; color: #586069; margin-top: 4px;" data-i18n="clearHistoryWarning">This will permanently delete all saved skill history from IndexedDB.</p>
-      </div>
+          <div class="setting-panel">
+            <label class="field-label" for="langSelect" data-i18n="languageLabel">Language</label>
+            <select id="langSelect">
+              <option value="system" data-i18n="langSystem">System Default</option>
+              <option value="en">English</option>
+              <option value="zh_CN">简体中文</option>
+            </select>
+          </div>
 
-      <button id="backBtn" data-i18n="backBtn">Back to Scanner</button>
+          <label class="toggle-card" for="autoDetectCheck">
+            <div class="toggle-copy">
+              <span class="toggle-title" data-i18n="autoDetectLabel">Auto-detect skills on GitHub pages</span>
+              <span class="toggle-note" data-i18n="autoDetectHint">Scan GitHub repositories quietly while you browse.</span>
+            </div>
+            <span class="toggle-switch">
+              <input type="checkbox" id="autoDetectCheck">
+              <span class="toggle-slider" aria-hidden="true"></span>
+            </span>
+          </label>
+        </section>
+
+        <section class="settings-card">
+          <div class="settings-card-header">
+            <div class="settings-card-title" data-i18n="settingsSectionAccess">GitHub Access</div>
+            <p class="settings-card-note" data-i18n="settingsSectionAccessNote">Use a token to avoid API rate limits on public repositories.</p>
+          </div>
+
+          <div class="setting-panel">
+            <label class="field-label" for="tokenInput" data-i18n="githubTokenFieldLabel">GitHub Token</label>
+            <input type="password" id="tokenInput" placeholder="ghp_...">
+            <div class="inline-link-row">
+              <a class="subtle-link" href="https://github.com/settings/tokens/new?description=Skills+Download+Extension" target="_blank" data-i18n="getOneHere">Get one here</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-card settings-card-danger">
+          <div class="settings-card-header">
+            <div class="settings-card-title" data-i18n="settingsSectionStorage">Local Data</div>
+            <p class="settings-card-note" data-i18n="settingsSectionStorageNote">Only affects data stored in this browser.</p>
+          </div>
+
+          <div class="setting-panel">
+            <label class="field-label" for="clearHistoryBtn" data-i18n="clearHistoryLabel">Clear History</label>
+            <button id="clearHistoryBtn" class="danger-btn" data-i18n="clearHistoryBtn">Clear All History</button>
+            <p class="helper-text" data-i18n="clearHistoryWarning">This will permanently delete all saved skill history from IndexedDB.</p>
+          </div>
+        </section>
+
+        <div class="settings-footer">
+          <button id="backBtn" class="secondary-outline" data-i18n="backBtn">Back to Scanner</button>
+          <button id="saveTokenBtn" class="settings-save-btn" data-i18n="saveSettingsBtn">Save Settings</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="collectionModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-text">
+          <h3 data-i18n="collectionModalTitle">Add to Collections</h3>
+          <p id="collectionModalSkillName" class="modal-skill-name"></p>
+        </div>
+        <button id="closeCollectionModalBtn" class="icon-btn ghost" title="Close" data-i18n-title="closeBtnTitle">✕</button>
+      </div>
+      <p class="modal-help" data-i18n="collectionModalHelp">Choose one or more collections for this skill.</p>
+      <div id="collectionModalBody"></div>
+      <div class="collection-create-row compact">
+        <input type="text" id="collectionModalNameInput" placeholder="Create and add to a new collection..." data-i18n-placeholder="collectionModalNamePlaceholder">
+        <button id="collectionModalCreateBtn" data-i18n="createAndAddCollectionBtn">Create & Add</button>
+      </div>
     </div>
   </div>
 
